@@ -1,3 +1,9 @@
+/**
+ * @param {Number} tag - Tag
+ * @param {Number} monat - Monat
+ * @param {Number} jahr - Jahr als vierstellige Zahl
+ * @return {Number} Wochentag, 0 = Sonntag, 1 = Montag, ... , 6 = Samstag
+ */
 function wochentag(tag, monat, jahr) {
     let h = Math.floor(jahr / 100);
     let j = jahr % 100;
@@ -23,10 +29,19 @@ function wochentag(tag, monat, jahr) {
     return w;
 }
 
+/**
+ * @param {Number} jahr - Jahr als vierstellige Zahl
+ * @return {Boolean} 'true', wenn Jahr ein Schaltjahr ist, sonst 'false'
+ */
 function schaltjahr(jahr) {
     return (jahr % 4 === 0) && !((jahr % 100 === 0) && (jahr % 400 !== 0));
 }
 
+/**
+ * @param {Number} monat - Monat
+ * @param {Number} jahr - Jahr als vierstellige Zahl
+ * @return {Number} Anzahl der Tage des Monats im angegebenen Jahr
+ */
 function anzahlTage(monat, jahr) {
     switch (monat) {
         case 1: return 31;
@@ -46,6 +61,10 @@ function anzahlTage(monat, jahr) {
     }
 }
 
+/**
+ * @param {Number} monat - Monat
+ * @return {String} Monatsname
+ */
 function monatsname(monat) {
     switch (monat) {
         case 1: return 'Januar';
@@ -78,7 +97,7 @@ function ostersonntag(jahr) {
     const sz = 7 - (jahr + Math.floor(jahr / 4) + s) % 7;
     const oe = 7 - (og - sz) % 7;
     const os = og + oe;
-    const tag = new Date(jahr,2);
+    const tag = new Date(jahr,2); // März
     if (os > 31) {
         tag.setMonth(3); // April
         tag.setDate(os - 31);
@@ -88,13 +107,17 @@ function ostersonntag(jahr) {
     return tag;
 }
 
+/**
+ * @param {Number} monat - Monat
+ * @return {Number[]} Array mit den Tagen
+ */
 function unbeweglicheFeiertage(monat) {
     let feiertage = [];
     switch (monat) {
         case 1: feiertage.push(1); break;
         case 2: break;
         case 3:
-            // feiertage.push(8); // BE
+            // feiertage.push(8); // Berlin
             break;
         case 4: break;
         case 5: feiertage.push(1); break;
@@ -104,7 +127,7 @@ function unbeweglicheFeiertage(monat) {
         case 9: break;
         case 10:
             feiertage.push(3);
-            feiertage.push(31); // BB
+            feiertage.push(31); // Brandenburg
             break;
         case 11: break;
         case 12:
@@ -116,6 +139,11 @@ function unbeweglicheFeiertage(monat) {
     return feiertage;
 }
 
+/**
+ * @param {Number} monat - Monat
+ * @param {Number} jahr - Jahr als vierstellige Zahl
+ * @return {Number[]} Array mit den Tagen
+ */
 function beweglicheFeiertage(monat, jahr) {
     const feiertage = [];
     const os = ostersonntag(jahr);
@@ -144,6 +172,7 @@ function beweglicheFeiertage(monat, jahr) {
     return feiertage;
 }
 
+// Hauptfunktion zum Testen
 function zeigeFeiertage() {
     const m = 12;
     const j = 2022;
